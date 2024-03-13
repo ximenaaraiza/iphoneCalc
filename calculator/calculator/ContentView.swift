@@ -42,7 +42,7 @@ struct ContentView: View {
                 ForEach(numsAndOperations, id:\.self){row in
                     HStack{
                         ForEach(row, id:\.self){circle in
-                            if circle == "AC" || circle == "+/-" || circle == "%"{
+                            if circle == "AC" || circle == "+/-" || circle == "%" || circle == "C"{
                                 Button("\(circle)", action:{
                                     handelClick(buttonClicked: circle)
                                 })
@@ -94,10 +94,12 @@ struct ContentView: View {
     }
     // this function is what is going to help know what button is clicked and what to display on the input
     func handelClick(buttonClicked: String){
-        if buttonClicked == "AC"{
+        numsAndOperations[0][0] = "C"
+        if buttonClicked == "AC" || buttonClicked == "C"{
             input = "0"
-//            buttonClicked = "C"
-                    }
+            numsAndOperations [0][0] = "AC"
+          
+        }
         else if buttonClicked == "+/-"{
             if let numInput = Int(input){
                 input = "\(numInput * -1)"
@@ -158,7 +160,7 @@ struct ContentView: View {
             }
         }
         // if its a regular number without a . then make them integers to do the math
-        // roughly same notes as the double ne above 
+        // roughly same notes as the double ne above
         else{
             if let numOne = Int(firstNum), let numTwo = Int(secNum){
                 if operation == "+"{
